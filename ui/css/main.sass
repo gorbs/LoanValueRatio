@@ -1,0 +1,776 @@
+$screen-xs-max: 767px
+$screen-sm-min: 768px
+$screen-md-min: 992px
+$screen-lg-min: 1200px
+
+$bgPrimaryBackgroundColor: #337ab7
+$bgSuccessBackgroundColor: #dff0d8
+$bgInfoBackgroundColor: #d9edf7
+$bgWarningBackgroundColor: #fcf8e3
+$bgDangerBackgroundColor: #f2dede
+
+$bgPrimaryBtn: #337ab7
+$bgSuccessBtn: #5cb85c
+$bgInfoBtn: #5bc0de
+$bgWarningBtn: #f0ad4e
+$bgDangerBtn: #d9534f
+
+$mapscreenPrimaryColor: #1C90F3
+$mapscreenSuccessColor: rgb(65, 164, 67)
+$mapscreenInfoColor: #000
+$mapscreenWarningColor: rgb(255, 177, 30)
+$mapscreenDangerColor: #d9534f
+
+html
+  height: 100%
+
+body
+  height: 100%
+  background-color: #f4f4f4
+  font-family: Lato, 'Helvetica Neue', Arial, Verdana, Tahoma, 'Lucida Sans', FreeSans, 'Lucida Sans Unicode', 'Luxi Sans', sans-serif
+
+.navbar-default
+  background-color: #fff
+  -webkit-box-shadow: 0 2px 5px 0 rgba(219, 219, 219, 1)
+  -moz-box-shadow: 0 2px 5px 0 rgba(219, 219, 219, 1)
+  box-shadow: 0 2px 5px 0 rgba(219, 219, 219, 1)
+
+label.control-label
+  font-weight: normal
+
+.text-primary
+  color: $mapscreenPrimaryColor
+
+.text-success
+  color: $mapscreenSuccessColor
+
+a.text-success:hover, a.text-success:active, a .text-success:hover, a .text-success:active
+  color: rgb(62, 134, 64)
+
+.text-warning
+  color: $mapscreenWarningColor
+
+a.text-warning:hover, a.text-warning:active
+  color: rgb(204, 116, 0)
+
+.text-danger
+  color: $mapscreenDangerColor
+
+a.text-danger:hover, a.text-danger:active
+  color: rgb(173, 80, 78)
+
+.label-success
+  background-color: $mapscreenSuccessColor
+
+.label-warning
+  background-color: $mapscreenWarningColor
+
+.label-danger
+  background-color: $mapscreenDangerColor
+
+.btn-default.ask-larry
+  padding: 0 0 5px
+  color: #fff
+  font-size: 22px
+
+.btn-default.ask-larry, .btn-default.ask-larry:active, .btn-default.ask-larry:visited
+  background-color: #000
+  border-color: #000
+
+.btn-default.ask-larry:hover
+  background-color: #333
+  border-color: #333
+
+.btn-outline
+  background-color: #fff
+  transition: all .1s
+
+.btn-primary.btn-outline
+  color: $mapscreenPrimaryColor
+  border-color: $mapscreenPrimaryColor
+
+.btn-primary.btn-outline:hover, .btn-primary.btn-outline:active, .btn-primary.btn-outline:focus,
+.btn-primary.active.btn-outline, .btn-primary.active.btn-outline:hover, .btn-primary.active.btn-outline:active, .btn-primary.active.btn-outline:focus,
+.open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover
+  color: $mapscreenPrimaryColor
+  background-color: rgba(28, 144, 243, 0.1)
+  border-color: $mapscreenPrimaryColor
+  outline: none
+
+.btn-primary.btn-outline.active > div
+  background-color: rgba(28, 144, 243, 0.1)
+
+.btn-success.btn-outline
+  color: $bgSuccessBtn
+
+.btn-info.btn-outline
+  color: $bgInfoBtn
+
+.btn-warning.btn-outline
+  color: $bgWarningBtn
+
+.btn-danger.btn-outline
+  color: $bgDangerBtn
+
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover
+  color: #fff
+
+.btn-success, .btn-success.btn-outline
+  &:hover, &:active, &:focus
+    color: $bgSuccessBtn
+    background-color: rgba(60, 118, 61, 0.1)
+    border-color: #398439
+
+div.center-graph
+  display: block
+  margin-left: auto
+  margin-right: auto
+
+div.detail-panel
+  position: absolute
+  bottom: 7px
+  background-color: #fff
+  border-radius: 4px
+  border: 1px solid
+  width: 990px
+  margin-left: 120px
+  margin-right: 120px
+  div.row
+    margin: 0
+  button
+    margin-right: 5px
+    margin-bottom: 5px
+  div.export-button
+    display: flex
+    justify-content: flex-end
+    margin-top: 45px
+  div.brick-data
+    //height: 216px
+    margin-top: 5px
+    div.form-group
+      margin: 0 0 0 0
+      div.no-pad
+        padding-left: 0
+      //&.km2>p.form-control-static::after
+        //  content: "2"
+
+      label.control-label
+        padding-top: 0
+        padding-left: 0
+      p.form-control-static
+        padding: 0
+        min-height: 20px
+  .close-icon
+    display: flex
+    justify-content: flex-end
+    margin-top: -13px
+  .brick-data
+    .title
+      border-bottom: thin solid #7a7a7a
+
+.container.fdt
+  vertical-align: middle
+  margin: 15px 15px 15px 0
+  position: fixed
+  width: 95%
+  bottom: 10px
+  top: 95px
+
+.bi-component.fdt
+  margin: 15px 0 15px 0
+  position: fixed
+  width: 95%
+  bottom: 10px
+  top: 85px
+
+.simulation.fdt
+  margin: 15px -15px 15px -15px
+  position: fixed
+  width: 95%
+  bottom: 10px
+  top: 180px
+
+.map-fullscreen
+  height: 88vh
+  overflow-y: hidden
+
+.mapscreen-component, .bi-component
+  margin-top: 12px
+  background-color: #fff
+  border-radius: 4px
+
+.mapscreen-component.map
+  @media (min-width: $screen-lg-min)
+    //height: 550px
+    height: 100%
+    padding-top: 10px
+    padding-bottom: 10px
+    .BrickDetail.well
+      padding-top: 5px
+      padding-bottom: 5px
+      margin-bottom: 10px
+      hr
+        margin-top: 2px
+        margin-bottom: 2px
+
+.practice-marker
+  position: absolute
+  background-color: #EEE
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  border: 1px solid #CCC
+  border-radius: 3px
+  margin-left: -5px
+  margin-top: 5px
+  padding: 10px
+  width: 350px
+  z-index: 5
+  .title
+    display: flex
+    justify-content: space-between
+    font-size: 1.2em
+    border-bottom: double #5d5d5d
+  .content
+    .prac-line
+      display: flex
+      justify-content: flex-start
+    .prac-label
+      width: 65px
+    .prac-value
+      width: 275px
+
+.mapscreen-component.territory-list
+  padding-top: 12px
+  //height: 550px
+  height: 100%
+  overflow-y: scroll
+
+.territory-detail
+  padding-top: 5px
+  padding-bottom: 5px
+  margin-top: 10px
+  font-size: 0.9em
+  input[type=text], .input-group-addon, input[type=number], select[type=select]
+    padding: 2px 6px
+    height: 26px
+    width: 220px
+    font-size: 0.9em
+  hr
+    margin-top: 2px
+    margin-bottom: 2px
+  .details Button
+    line-height: 0.8em
+    padding-top: 3px
+    margin-left: 4px
+  &.well
+    padding: 5px 5px 5px 5px
+    .form-group
+      margin-bottom: 3px
+  .details span .fa
+    margin-left: 4px
+  .details span .fa
+    color: #7B7B7B
+    &.fa-trash:hover
+      color: red
+    &.fa-plus:hover
+      color: #24E605
+
+  //  td.delete
+  //  color: #7B7B7B
+  //  span
+  //    font-size: 1.1em
+  //td.delete span:hover
+  //  color: red
+
+.config-tabs a
+  color: rgb(119, 119, 119)
+  border: none
+  font-size: 0.9em
+
+.config-tabs
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover
+    border: none
+    font-weight: bold
+  .nav > li > a
+    padding: 0
+  ul
+    border-bottom: 0
+
+.bi-repform
+  @media (min-width: $screen-lg-min)
+    // Pixel budget: 1140
+    .reorder
+      width: 0
+    .rep-active
+      width: 50px
+    .number
+      width: 30px
+    .age
+      width: 100px
+      &.readonly
+        width: 50px
+    .gender
+      width: 50px
+    .experience
+      width: 100px
+    .conv-weight
+      width: 100px
+    .avg-time
+      width: 40px
+    .products-represented
+      width: 200px
+    th.delete
+      width: 30px
+    td.delete
+      color: #7B7B7B
+      span
+        font-size: 1.1em
+    td.delete span:hover
+      color: red
+    .gender-glyph
+      font-size: 1.2em
+      &.F
+        color: orchid
+      &.M
+        color: dodgerblue
+
+table.bi-repform-table.table
+  border-radius: 4px
+  margin-bottom: 10px
+  font-size: .8em
+  .form-group
+    margin-bottom: 0
+  @media (min-width: $screen-lg-min)
+    // Pixel budget: 1140
+    .reorder
+      width: 0
+    .rep-active
+      width: 50px
+    .practice
+      width: 250px
+    .address
+      width: 250px
+    .number
+      width: 30px
+    .age
+      width: 100px
+      &.readonly
+        width: 50px
+    .gender
+      width: 50px
+    .experience
+      width: 110px
+    .rep-performance
+      width: 100px
+    .call-quality
+      width: 100px
+    .activity-level
+      width: 100px
+    .avg-time
+      width: 40px
+    .sales-division
+      width: 150px
+    .sales-team
+      width: 150px
+    th.delete
+      width: 30px
+    td.delete
+      color: #7B7B7B
+      span
+        font-size: 1.1em
+    td.delete span:hover
+      color: red
+    .gender-glyph
+      font-size: 1.2em
+      &.F
+        color: orchid
+      &.M
+        color: dodgerblue
+  th
+    text-align: center
+  td
+    padding: 2px
+    vertical-align: middle !important
+    input[type=text], .input-group-addon, input[type=number], select[type=select]
+      padding: 2px 6px
+      height: 26px
+      font-size: 1em
+  tr.add-line
+    background-color: #fff
+
+table.bi-loaddata-table.table
+  border-radius: 4px
+  margin-bottom: 10px
+  font-size: .8em
+  .form-group
+    margin-bottom: 0
+  @media (min-width: $screen-lg-min)
+    // Pixel budget: 1140
+    .stuff
+      width: 100px
+  .check
+    width: 53px
+  .description
+    width: 200px
+  input[type=radio]
+    bottom: -1px
+    margin-left: -8px
+  //th
+  //  text-align: center
+  td
+    padding: 2px
+    vertical-align: middle !important
+
+table.bi-sales-division-table.table
+  border-radius: 4px
+  margin-bottom: 10px
+  font-size: .8em
+  .form-group
+    margin-bottom: 0
+  @media (min-width: $screen-lg-min)
+    // Pixel budget: 1140
+    .sales-division
+      width: 50px
+    .prod-pos-one
+      width: 100px
+      &.readonly
+        width: 100px
+    .prod-pos-two
+      width: 100px
+      &.readonly
+        width: 100px
+    .prod-pos-three
+      width: 100px
+      &.readonly
+        width: 100px
+  th
+    text-align: center
+  td
+    padding: 2px
+    vertical-align: middle !important
+    input[type=text], .input-group-addon, input[type=number], select[type=select]
+      padding: 2px 6px
+      height: 26px
+      font-size: 1em
+  tr.add-line
+    background-color: #fff
+
+.bi-component.simulation
+  input[type=text], .input-group-addon, input[type=number], select[type=select]
+    padding: 2px 6px
+    height: 26px
+    font-size: 1em
+    margin-left: 16px
+    margin-top: -2px
+  .progress-bar-info
+    background-color: #1C90F3
+  .progress-bar-not-running
+    height: 20px
+    margin-bottom: 20px
+    overflow: hidden
+    background-color: #f5f5f5
+    border-radius: 4px
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1)
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1)
+    text-align: center
+
+.add-search
+  height: 26px
+  font-size: 0.8em
+  input[type=text]
+    padding: 2px 20px 2px 6px
+    height: 26px
+    font-size: 1em
+
+table.bi-practitioner-table.table
+  border-radius: 4px
+  margin-bottom: 10px
+  font-size: .8em
+  .form-group
+    margin-bottom: 0
+  @media (min-width: $screen-lg-min)
+    // Pixel budget: 1140
+    .number
+      width: 30px
+    .date
+      width: 30px
+      &.readonly
+        width: 30px
+    .duration
+      width: 30px
+    .description
+      width: 100px
+    .address
+      width: 150px
+    th.delete
+      width: 10px
+    td.delete
+      color: #7B7B7B
+      span
+        font-size: 1.1em
+    td.delete span:hover
+      color: red
+    .gender-glyph
+      font-size: 1.2em
+      &.F
+        color: orchid
+      &.M
+        color: dodgerblue
+  th
+    text-align: center
+  td
+    padding: 2px
+    vertical-align: middle !important
+    input[type=text], .input-group-addon, input[type=number], select[type=select]
+      padding: 2px 6px
+      height: 26px
+      font-size: 1em
+
+.bi-market-table.table
+  font-size: .8em
+  margin-top: 5px
+  margin-left: 5px
+  @media (min-width: $screen-lg-min)
+    th
+      text-align: left
+    td
+      padding: 5px 0 0
+      vertical-align: middle !important
+      text-align: left
+
+table.bi-practice-table.table
+  border-radius: 4px
+  margin-bottom: 10px
+  font-size: .8em
+  .form-group
+    margin-bottom: 0
+  @media (min-width: $screen-lg-min)
+    // Pixel budget: 1140
+    .number
+      width: 30px
+    .name
+      width: 200px
+    .onekey
+      width: 130px
+    .type
+      width: 196px
+    .docsperprac
+      width: 70px
+    th.delete
+      width: 10px
+    td.delete
+      color: #7B7B7B
+      span
+        font-size: 1.1em
+    td.delete span:hover
+      color: red
+    .gender-glyph
+      font-size: 1.2em
+      &.F
+        color: orchid
+      &.M
+        color: dodgerblue
+  th
+    text-align: center
+  td
+    padding: 2px
+    vertical-align: middle !important
+    input[type=text], .input-group-addon, input[type=number], select[type=select]
+      padding: 2px 6px
+      height: 26px
+      font-size: 1em
+
+div.team-detail-products
+  margin-left: 0
+
+div.team-detail-table
+  font-size: .8em
+  margin-bottom: 0
+  margin-top: 5px
+  td
+    padding: 5px 0 0
+    vertical-align: middle !important
+  select[type=select]
+    padding-right: 10px
+    height: 26px
+    font-size: 1em
+  .form-group
+    margin-bottom: 0
+
+.foobar
+  color: rgb(27, 121, 178)
+
+a.mapscreen-select
+  border-bottom: 1px dotted
+
+a.mapscreen-select:hover
+  text-decoration: none
+
+.grab
+  cursor: grab
+  cursor: -webkit-grab
+  cursor: -moz-grab
+
+.grab:active
+  cursor: grabbing
+  cursor: -webkit-grabbing
+  cursor: -moz-grabbing
+
+.dropdown-toggle#profile-dropdown
+  border: none
+  border-radius: 0
+  padding: 11px 0px 0px 0px
+  &:hover
+  background-color: #fff
+
+.btn-ask-larry
+  background-color: #000
+  border-color: #000
+  color: #fff
+
+.btn-ask-larry:hover, .btn-ask-larry:active
+  background-color: #444
+  border-color: #444
+  color: #fff
+
+.cumulative-graph
+  div.nv-chart
+    svg
+      width: 777px
+      height: 297px
+    .nv-group
+      &.nv-series-0 .nv-bar
+        fill: rgb(68, 193, 117)
+        stroke: rgb(68, 193, 117)
+      &.nv-series-1 .nv-bar
+        fill: rgb(51, 129, 199)
+        stroke: rgb(51, 129, 199)
+
+.detail-panel
+  div.nv-chart
+    svg
+      width: 570px
+      height: 229px
+    .nv-group
+      &.nv-series-0 .nv-bar
+        fill: rgb(68, 193, 117)
+        stroke: rgb(68, 193, 117)
+      &.nv-series-1 .nv-bar
+        fill: rgb(51, 129, 199)
+        stroke: rgb(51, 129, 199)
+
+.bi-component .public_fixedDataTable_main
+  border-radius: 4px
+  margin-bottom: 10px
+  font-size: .8em
+  border: none
+  .form-group
+    margin-bottom: 0
+    .form-control
+      font-size: 1em
+  .public_fixedDataTableRow_highlighted, .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main
+    background-color: #fff
+  .public_fixedDataTable_header, .public_fixedDataTable_header .public_fixedDataTableCell_main
+    background: #fff none
+    border-bottom: 2px solid #ddd
+    border-top: none
+  .fixedDataTableCellLayout_main, .fixedDataTableCellLayout_alignCenter, .public_fixedDataTableCell_main
+    //border-top: 1px solid #ddd
+    border-bottom: none !important
+    border-left: none !important
+    border-right: none !important
+  .public_fixedDataTableRow_main.public_fixedDataTableRow_even
+    border-top: 1px solid #ddd
+    border-bottom: 1px solid #ddd
+  .public_fixedDataTableCell_cellContent
+    padding: 2px
+  input[type=text], .input-group-addon, input[type=number], select[type=select], select.form-control
+    padding: 2px 6px
+    height: 26px
+    font-size: 1em
+  .fa-trash
+    color: #7B7B7B
+    font-size: 1.1em
+    &:hover
+      color: red
+  .gender-glyph
+    font-size: 1.2em
+    &.F
+      color: orchid
+    &.M
+      color: dodgerblue
+
+.container
+  width: 95%
+
+input.view-radio
+  margin-right: 2px
+  margin-left: -13px
+
+.profile-dropdown li:last-child [role="menuitem"]
+  padding-left: 24px
+
+.bi-component.optimisation
+  padding-top: 10px
+
+
+.bi-component.optimisation-fullscreen
+  margin: 35px 0 0px -15px
+  position: fixed
+  width: 95%
+  bottom: 10px
+  top: 165px
+
+.progress-bar-info
+  background-color: #1C90F3
+.progress-bar-not-running
+  height: 20px
+  margin-bottom: 20px
+  overflow: hidden
+  background-color: #f5f5f5
+  border-radius: 4px
+  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1)
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.1)
+  text-align: center
+
+.optimisation-inner
+  //padding: 0px 10px 0px 10px
+  margin: 10px
+  border-bottom: 1px solid rgb(238, 238, 238)
+  //border-bottom: 2px solid rgb(255, 10, 10)
+
+.simulation-inner
+  //padding: 0px 10px 0px 10px
+  margin: 10px
+  //border-bottom: 1px solid rgb(238, 238, 238)
+//border-bottom: 2px solid rgb(255, 10, 10)
+
+.param-adj
+  display: flex
+  justify-content: space-between
+  align-items: baseline
+  margin-bottom: 5px
+  .percent-adj
+    width: 70px
+    height: 26px
+    font-size: 1em
+  .input-group
+    display: inline-flex
+    .input-group-addon
+      height: 26px
+      font-size: 0.8em
+      padding-right: 18px
+  .percent-adj.form-control
+    padding-top: 0
+    padding-bottom: 0
+
+.rc-slider-with-marks
+  margin-bottom: 25px
+
+.intermediate
+  margin: 35px 0 0 14px
+  position: fixed
+  width: 93%
+  bottom: 22px
+  top: 178px
