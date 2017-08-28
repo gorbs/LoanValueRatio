@@ -9,8 +9,8 @@ class App extends React.Component {
         agentPercent: 1.5,
         marketingFee: 0,
         conveyanceSell: 800,
-        mortgageA: 217268,
-        mortgageB: 142607,
+        mortgageA: 215310,
+        mortgageB: 141454,
         otherSell: 0,
 
         buildPrice: 400000,
@@ -43,6 +43,19 @@ class App extends React.Component {
         this.state.pps = pp
     }
 
+    dollarFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    })
+
+    percentFormatter = new Intl.NumberFormat('en-US', {
+        style: 'percent',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })
+
     _handleChange = (event) => {
         let id = event.currentTarget.id;
         this._updateField(id, event.currentTarget.value)
@@ -53,8 +66,11 @@ class App extends React.Component {
             val = App.defaultProps[id]
         }
 
+        console.log(val)
+
         let newState = {}
         newState[id] = parseFloat(val)
+        console.log(newState)
         this.setState(newState)
 
 
@@ -405,79 +421,77 @@ class App extends React.Component {
         let sellPrice = this.state.emvs[data.rowIndex]
         let landPrice = this.state.pps[data.columnKey]
         return (
-            <div style={{padding: 5}}>
-                <Row>
+            <div style={{padding: 5, textAlign: 'right'}}>
+                <Row className="row-panel">
                     <Col md={6}>
                         Sell Price:
                     </Col>
-                    <Col md={6}>
-                        {sellPrice}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(sellPrice)}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel">
                     <Col md={6}>
                         Land Price:
                     </Col>
-                    <Col md={6}>
-                        {landPrice}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(landPrice)}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel">
                     <Col md={6}>
                         Agent Fee:
                     </Col>
-                    <Col md={6}>
-                        {this.agentFee(sellPrice)}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(this.agentFee(sellPrice))}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel">
                     <Col md={6}>
                         After Sale Cash:
                     </Col>
-                    <Col md={6}>
-                        {this.afterSaleCash(sellPrice)}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(this.afterSaleCash(sellPrice))}
                     </Col>
                 </Row>
-
-
-                <Row>
+                <Row className="row-panel">
                     <Col md={6}>
                         Stamp Duty:
                     </Col>
-                    <Col md={6}>
-                        {this.stampDuty(landPrice)}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(this.stampDuty(landPrice))}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel">
                     <Col md={6}>
                         Transfer:
                     </Col>
-                    <Col md={6}>
-                        {this.lto(landPrice)}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(this.lto(landPrice))}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel" style={{borderBottom: '1px solid'}}>
                     <Col md={6}>
                         Purchase Cost:
                     </Col>
-                    <Col md={6}>
-                        {this.purchaseCost(landPrice)}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(this.purchaseCost(landPrice))}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel" style={{fontWeight: 'bold'}}>
                     <Col md={6}>
                         Loan:
                     </Col>
-                    <Col md={6}>
-                        {this.loan(sellPrice, landPrice)}
+                    <Col className="fixed-right" md={6}>
+                        {this.dollarFormatter.format(this.loan(sellPrice, landPrice))}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="row-panel" style={{fontWeight: 'bold'}}>
                     <Col md={6}>
                         LVR:
                     </Col>
                     <Col md={6}>
-                        {(this.lvr(sellPrice, landPrice) * 100).toFixed(2)}
+                        {this.percentFormatter.format((this.lvr(sellPrice, landPrice)))}
                     </Col>
                 </Row>
             </div>
