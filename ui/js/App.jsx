@@ -41,6 +41,10 @@ class App extends React.Component {
             pp.push(j * 1000)
         }
         this.state.pps = pp
+        this.state.rowIndex = 0;
+        this.state.columnKey = 0;
+        this.state.rowHighlightIndexHidden = -1
+        this.state.columnHighlightKeyHidden = -1
     }
 
     dollarFormatter = new Intl.NumberFormat('en-US', {
@@ -349,7 +353,7 @@ class App extends React.Component {
                                     >
                                     <Column header={<Cell>&nbsp;</Cell>}
                                             columnKey="sp"
-                                            cell={props => {return(<Cell {...props}><span>${this.state.emvs[props.rowIndex]/1000}k</span></Cell>)}}
+                                            cell={props => this._renderFirstColumnCell(props)}
                                             width={30}
                                             align="center"
                                             flexGrow={1}
@@ -370,9 +374,15 @@ class App extends React.Component {
         )
     }
 
+    _renderFirstColumnCell(data) {
+        let style = data.rowIndex == this.state.rowIndex ? {fontWeight: 'bold'} : {fontWeight: 'normal'}
+        return(<Cell {...data} style={style}><span>${this.state.emvs[data.rowIndex]/1000}k</span></Cell>)
+    }
+
     _renderColumn = (data, i) => {
+        let style = i == this.state.columnKey ? {fontWeight: 'bold'} : {fontWeight: 'normal'}
         let header =
-            <span>${data / 1000}k<br/>${((data + this._purchaseFees(data) + this.state.buildPrice + this.state.demolitionPrice) / 1000).toFixed(0)}k</span>
+            <span style={style}>${data / 1000}k<br/>${((data + this._purchaseFees(data) + this.state.buildPrice + this.state.demolitionPrice) / 1000).toFixed(0)}k</span>
 
         return <Column header={<Cell>{header}</Cell>}
                        key={i}
@@ -384,6 +394,23 @@ class App extends React.Component {
             />
     }
 
+    _mouseenter(data) {
+        if (!this.state.show) {
+            this.setState({rowHighlightIndex: data.rowIndex, columnHighlightKey: data.columnKey, rowIndex: data.rowIndex, columnKey: data.columnKey,
+                rowHighlightIndexHidden: data.rowIndex, columnHighlightKeyHidden: data.columnKey})
+        } else {
+            this.setState({rowIndex: data.rowIndex, columnKey: data.columnKey, rowHighlightIndexHidden: data.rowIndex, columnHighlightKeyHidden: data.columnKey})
+        }
+    }
+
+    _mouseexit(data) {
+        if(!this.state.show) {
+            this.setState({rowIndex: -1, columnKey: -1, rowHighlightIndex: -1, columnHighlightKey: -1})
+        } else {
+            this.setState({rowIndex: -1, columnKey: -1})
+        }
+    }
+
     _renderCell = (data) => {
         let sellPrice = parseInt(this.state.emvs[data.rowIndex])
         let landPrice = parseInt(this.state.pps[data.columnKey])
@@ -391,15 +418,15 @@ class App extends React.Component {
 
         let bgColor = 'white'
         let selectedStyle = {}
-        if (this.state.data) {
-            if (data.rowIndex == this.state.data.rowIndex && data.columnKey <= this.state.data.columnKey) {
+        if (this.state.show && this.state.data) {
+            if (data.rowIndex == this.state.rowHighlightIndex && data.columnKey <= this.state.columnHighlightKey) {
                 bgColor = lvr >= 0.80 ? '#A57171' : '#679267'
-            } else if (data.columnKey == this.state.data.columnKey && data.rowIndex <= this.state.data.rowIndex) {
+            } else if (data.columnKey == this.state.columnHighlightKey && data.rowIndex <= this.state.rowHighlightIndex) {
                 bgColor = lvr >= 0.80 ? '#A57171' : '#679267'
             } else {
                 bgColor = lvr >= 0.80 ? '#D68383' : '#6FDC6F'
             }
-            if (data.rowIndex == this.state.data.rowIndex && data.columnKey == this.state.data.columnKey) {
+            if (data.rowIndex == this.state.rowHighlightIndex && data.columnKey == this.state.columnHighlightKey) {
                 selectedStyle = {color: 'white'}
             }
         } else {
@@ -408,7 +435,7 @@ class App extends React.Component {
         let style = {...selectedStyle, backgroundColor: bgColor}
 
         return (
-            <Cell {...data} onClick={() => this._showData(data)} style={style}>
+            <Cell {...data} onMouseLeave={() => this._mouseexit(data)} onMouseEnter={() => this._mouseenter(data)} onClick={() => this._showData(data)} style={style}>
                 <span>{(lvr * 100).toFixed(2)}</span>
             </Cell>
         )
@@ -416,7 +443,10 @@ class App extends React.Component {
 
     _showData(data) {
         let show = !this.state.show
-        this.setState({show: show, data: show ? data : null})
+        this.setState({show: show,
+            data: show ? data : null,
+            rowHighlightIndex: this.state.rowHighlightIndexHidden,
+            columnHighlightKey: this.state.columnHighlightKeyHidden})
     }
 
     _getRow(label, value, debit, border, bold, notRightFixed) {

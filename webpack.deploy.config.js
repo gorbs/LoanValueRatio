@@ -48,7 +48,7 @@ var config = {
         ]),
         new DefinePlugin({
             'process.env': {
-                'NODE_ENV': '"development"'
+                'NODE_ENV': '"production"'
             }
         }),
         new ExtractTextPlugin( '/css/main.css', {
