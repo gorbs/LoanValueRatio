@@ -13,8 +13,8 @@ class App extends React.Component {
         mortgageB: 141454,
         otherSell: 0,
 
-        buildPrice: 400000,
-        demolitionPrice: 10000,
+        buildPrice: 500000,
+        demolitionPrice: 0,
         otherBuyCost: 0,
         rates: 2000,
         conveyanceBuy: 800,
@@ -214,6 +214,27 @@ class App extends React.Component {
     }
 
     render() {
+        let columnKey = this.state.data && this.state.data.columnKey ? this.state.data.columnKey : 0
+
+        let popStyle = {
+            display: this.state.show ? 'block' : 'none',
+            width: 300, height: 200,
+            borderStyle: 'solid',
+            borderWidth: 1,
+            backgroundColor: 'white',
+            bottom: 10,
+            right: 10,
+            borderRadius: 5,
+            position: 'absolute'
+        };
+
+        if (columnKey / this.state.pps.length >= 0.5) {
+            popStyle = {...popStyle, left: 10}
+        } else {
+            popStyle = {...popStyle, right: 10}
+        }
+
+
         return (
             <div>
                 <div className='container' style={{paddingTop: 50, marginBottom: 12}}>
@@ -347,17 +368,7 @@ class App extends React.Component {
                         </Row>
                     </Row>
                 </div>
-                <div style={
-                {display: this.state.show ? 'block' : 'none',
-                width: 300, height: 200,
-                borderStyle: 'solid',
-                 borderWidth: 1,
-                backgroundColor: 'white',
-                bottom: 10,
-                right: 10,
-                borderRadius: 5,
-                position: 'absolute'}
-                }>
+                <div style={popStyle}>
                     {this._popBody(this.state.data)}
                 </div>
             </div>
@@ -401,7 +412,6 @@ class App extends React.Component {
         }
         let style = {...selectedStyle, backgroundColor: bgColor}
 
-
         return (
             <Cell {...data} onClick={() => this._showData(data)} style={style}>
                 <span>{(lvr * 100).toFixed(2)}</span>
@@ -414,86 +424,86 @@ class App extends React.Component {
         this.setState({show: show, data: show ? data : null})
     }
 
+    _getRow(label, value, debit, border, bold, notRightFixed) {
+        const className = !!debit ? "row-panel red" : "row-panel"
+        let style = {};
+        if (!!border) {
+            style = {...style, borderBottom: '1px solid', borderTop: '1px solid'}
+        }
+        if (!!bold) {
+            style = {...style, fontWeight: 'bold'}
+        }
+
+        let fixedRight = !!notRightFixed ? "" : "fixed-right"
+
+        return (
+            <Row className={className} style={style}>
+                <Col md={7}>
+                    {label}
+                </Col>
+                <Col className={fixedRight} md={5}>
+                    {value}
+                </Col>
+            </Row>)
+    }
+
+    _sellFees(sellPrice) {
+        return this.agentFee(sellPrice) + this.state.marketingFee + this.state.conveyanceSell + this.mortgage() + this.state.otherSell
+    }
+
+    _showSellFees(sellPrice) {
+        return (
+            <Popover id="sellcosts" title="Sell Fees" style={{width: 300}}>
+                {this._getRow('Agent Fee', this.dollarFormatter.format(this.agentFee(sellPrice)), true)}
+                {this._getRow('Marketing', this.dollarFormatter.format(this.state.marketingFee), true)}
+                {this._getRow('Conveyance sell', this.dollarFormatter.format(this.state.conveyanceSell), true)}
+                {this._getRow('Mortgages', this.dollarFormatter.format(this.mortgage()), true)}
+                {this._getRow('Mortgages', this.dollarFormatter.format(this.state.otherSell), true)}
+                {this._getRow('Total sell fees', this.dollarFormatter.format(this._sellFees(sellPrice)), true, true)}
+            </Popover>
+        )
+    }
+
+    _purchaseFees(landPrice) {
+        return this.state.rates + this.state.conveyanceBuy + this.state.otherBuyCost + this.stampDuty(landPrice) + this.lto(landPrice)
+    }
+
+    _showPurchaseFees(landPrice) {
+        return (
+            <Popover id="purchasecosts" title="Purchase Fees" style={{width: 300}}>
+                {this._getRow('Rates', this.dollarFormatter.format(this.state.rates), true)}
+                {this._getRow('Conveyance buy', this.dollarFormatter.format(this.state.conveyanceBuy), true)}
+                {this._getRow('Other costs', this.dollarFormatter.format(this.state.otherBuyCost), true)}
+                {this._getRow('Stamp duty', this.dollarFormatter.format(this.stampDuty(landPrice)), true)}
+                {this._getRow('LTO Transfer', this.dollarFormatter.format(this.lto(landPrice)), true)}
+                {this._getRow('Total buy fees', this.dollarFormatter.format(this._purchaseFees(landPrice)), true, true)}
+            </Popover>
+        )
+    }
+
     _popBody(data) {
         if (!data) {
             return null
         }
         let sellPrice = this.state.emvs[data.rowIndex]
         let landPrice = this.state.pps[data.columnKey]
+        let placement = data.columnKey / this.state.pps.length >= 0.5 ? 'right' : 'left'
         return (
             <div style={{padding: 5, textAlign: 'right'}}>
-                <Row className="row-panel">
-                    <Col md={6}>
-                        Sell Price:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(sellPrice)}
-                    </Col>
-                </Row>
-                <Row className="row-panel">
-                    <Col md={6}>
-                        Land Price:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(landPrice)}
-                    </Col>
-                </Row>
-                <Row className="row-panel">
-                    <Col md={6}>
-                        Agent Fee:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(this.agentFee(sellPrice))}
-                    </Col>
-                </Row>
-                <Row className="row-panel">
-                    <Col md={6}>
-                        After Sale Cash:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(this.afterSaleCash(sellPrice))}
-                    </Col>
-                </Row>
-                <Row className="row-panel">
-                    <Col md={6}>
-                        Stamp Duty:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(this.stampDuty(landPrice))}
-                    </Col>
-                </Row>
-                <Row className="row-panel">
-                    <Col md={6}>
-                        Transfer:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(this.lto(landPrice))}
-                    </Col>
-                </Row>
-                <Row className="row-panel" style={{borderBottom: '1px solid'}}>
-                    <Col md={6}>
-                        Purchase Cost:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(this.purchaseCost(landPrice))}
-                    </Col>
-                </Row>
-                <Row className="row-panel" style={{fontWeight: 'bold'}}>
-                    <Col md={6}>
-                        Loan:
-                    </Col>
-                    <Col className="fixed-right" md={6}>
-                        {this.dollarFormatter.format(this.loan(sellPrice, landPrice))}
-                    </Col>
-                </Row>
-                <Row className="row-panel" style={{fontWeight: 'bold'}}>
-                    <Col md={6}>
-                        LVR:
-                    </Col>
-                    <Col md={6}>
-                        {this.percentFormatter.format((this.lvr(sellPrice, landPrice)))}
-                    </Col>
-                </Row>
+                {this._getRow('Sell Price', this.dollarFormatter.format(sellPrice))}
+                <OverlayTrigger trigger="click" rootClose placement={placement} overlay={this._showSellFees(sellPrice)}>
+                    {this._getRow('Sell Fees*', this.dollarFormatter.format(this._sellFees(sellPrice)), true)}
+                </OverlayTrigger>
+                {this._getRow('After Sale Cash', this.dollarFormatter.format(this.afterSaleCash(sellPrice)), false, true)}
+                {this._getRow('Land Price', this.dollarFormatter.format(landPrice), true)}
+                {this._getRow('Build Price', this.dollarFormatter.format(this.state.buildPrice + this.state.demolitionPrice), true)}
+                <OverlayTrigger trigger="click" rootClose placement={placement}
+                                overlay={this._showPurchaseFees(landPrice)}>
+                    {this._getRow('Purchase Fees*', this.dollarFormatter.format(this._purchaseFees(landPrice)), true)}
+                </OverlayTrigger>
+                {this._getRow('Purchase cost', this.dollarFormatter.format(this.purchaseCost(landPrice)), true, true)}
+                {this._getRow('Loan', this.dollarFormatter.format(this.loan(sellPrice, landPrice)), false, false, true)}
+                {this._getRow('LVR', this.percentFormatter.format(this.lvr(sellPrice, landPrice)), false, false, true, true)}
             </div>
         )
     }

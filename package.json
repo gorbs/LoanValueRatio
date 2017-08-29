@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.config.js",
-    "deploy-dev": "webpack --progress --colors -p --config webpack.deploy.config.js",
+    "deploy": "webpack --progress --colors -p --config webpack.deploy.config.js",
     "electron": "electron"
   }
 }
