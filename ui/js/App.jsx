@@ -63,17 +63,12 @@ class App extends React.Component {
 
     _updateField(id, val) {
         if (!val || val.length == 0) {
-            val = App.defaultProps[id]
+            val = App.defaultProps[id] + ""
         }
 
-        console.log(val)
-
         let newState = {}
-        newState[id] = parseFloat(val)
-        console.log(newState)
+        newState[id] = val.substring(val.length - 1) == '.' ? val : parseFloat(val)
         this.setState(newState)
-
-
     }
 
     agentFee(sellPrice) {
@@ -352,9 +347,9 @@ class App extends React.Component {
                                                           height={490}
                                                           width={500}
                                     >
-                                    <Column header={<Cell>Sell Price</Cell>}
+                                    <Column header={<Cell>&nbsp;</Cell>}
                                             columnKey="sp"
-                                            cell={props => {return(<Cell {...props}><span>{this.state.emvs[props.rowIndex]/1000}</span></Cell>)}}
+                                            cell={props => {return(<Cell {...props}><span>${this.state.emvs[props.rowIndex]/1000}k</span></Cell>)}}
                                             width={30}
                                             align="center"
                                             flexGrow={1}
@@ -377,7 +372,7 @@ class App extends React.Component {
 
     _renderColumn = (data, i) => {
         let header =
-            <span>{data / 1000}<br/> {(data + this.state.buildPrice + this.state.demolitionPrice) / 1000}</span>
+            <span>${data / 1000}k<br/>${((data + this._purchaseFees(data) + this.state.buildPrice + this.state.demolitionPrice) / 1000).toFixed(0)}k</span>
 
         return <Column header={<Cell>{header}</Cell>}
                        key={i}
